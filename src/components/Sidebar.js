@@ -15,11 +15,13 @@ import React from "react";
 import styled from "styled-components";
 import SidebarOption from "./SidebarOption";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Sidebar() {
   const [channels, loading, error] = useCollection(db.collection("rooms"));
+  const [user] = useAuthState(auth);
 
   return (
     <SidebarContainer>
@@ -28,7 +30,7 @@ function Sidebar() {
           <h2>Slack clone</h2>
           <h3>
             <FiberManualRecord />
-            Shin Code
+            {user.displayName}
           </h3>
         </SidebarInfo>
         <CreateIcon />
